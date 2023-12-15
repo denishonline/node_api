@@ -1,7 +1,7 @@
 const { User } = require("../models") // Import the User model
 
 // Controller actions for fetching user data
-const UserController = {
+const userController = {
   async getAllUsers(req, res) {
     try {
       const users = await User.findAll() // Fetch all users from the database
@@ -29,4 +29,4 @@ const UserController = {
   // Other controller actions for creating, updating, or deleting users can be added here...
 }
 
-module.exports = UserController
+module.exports = userController
