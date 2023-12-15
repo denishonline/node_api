@@ -1,39 +1,32 @@
-const userService = require("../services/userService")
-const user = require("../models/user")
+const { User } = require("../models") // Import the User model
 
-const userController = {
-  async login(req, res, next) {
-    const { email, password } = req.body
-
+// Controller actions for fetching user data
+const UserController = {
+  async getAllUsers(req, res) {
     try {
-      const authResult = await userService.authenticateUser(email, password)
+      const users = await User.findAll() // Fetch all users from the database
+      res.status(200).json(users) // Return users as JSON
+    } catch (error) {
+      console.error("Error fetching users:", error)
+      res.status(500).send("Error fetching users") // Send an error response
+    }
+  },
 
-      if (!authResult) {
-        return res.status(401).json({ message: "Invalid credentials" })
+  async getUserById(req, res) {
+    const { id } = req.params
+    try {
+      const user = await User.findByPk(id) // Fetch user by ID from the database
+      if (!user) {
+        return res.status(404).send("User not found")
       }
-
-      res.json({ user: authResult.user, token: authResult.token })
-    } catch (err) {
-      next(err)
+      res.status(200).json(user) // Return user details as JSON
+    } catch (error) {
+      console.error("Error fetching user:", error)
+      res.status(500).send("Error fetching user") // Send an error response
     }
   },
 
-  async getAllUsers(req, res, next) {
-    try {
-      //const users = await user.find()
-
-      const users = [
-        { name: "Ajay", email: "ajay@gmail.com" },
-        { name: "Manish", email: "manish@gmail.com" },
-      ]
-
-      res.json(users)
-    } catch (err) {
-      next(err)
-    }
-  },
-
-  // Other controller methods for user CRUD operations
+  // Other controller actions for creating, updating, or deleting users can be added here...
 }
 
-module.exports = userController
+module.exports = UserController
