@@ -17,7 +17,9 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "mongoose": "^8.0.2",
-    "node-cache": "^5.1.2"
+    "node-cache": "^5.1.2",
+    "sequelize": "^6.35.1",
+    "sequelize-cli": "^6.6.2",
+    "tedious": "^16.6.1"
   }
 }
