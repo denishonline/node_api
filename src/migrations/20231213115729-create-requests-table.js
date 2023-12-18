@@ -10,21 +10,26 @@ module.exports = {
       },
       pas_id: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       dtsm_no: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       name: {
         type: Sequelize.STRING(50),
       },
       pan_no: {
         type: Sequelize.STRING(50),
+        allowNull: false,
       },
       basket_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       residential_status_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       description: {
         type: Sequelize.STRING(200),

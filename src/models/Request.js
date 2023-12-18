@@ -13,21 +13,26 @@ const Request = sequelize.define(
     },
     pas_id: {
       type: DataTypes.STRING(50),
+      allowNull: false,
     },
     dtsm_no: {
       type: DataTypes.STRING(50),
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(50),
     },
     pan_no: {
       type: DataTypes.STRING(50),
+      allowNull: false,
     },
     basket_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     residential_status_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     description: {
       type: DataTypes.STRING(200),
