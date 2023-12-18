@@ -1,11 +1,13 @@
 const sequelize = require("../../config/database")
 const User = require("./User")
 const Request = require("./Request")
+const Switch = require("./Switch")
 // Import other models here
 
 const models = {
   User,
   Request,
+  Switch,
   // Other models...
 }
 
