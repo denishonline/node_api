@@ -1,65 +1,67 @@
-const { TopUp } = require("../models") // Import the TopUp model
+const topUpService = require("../services/topUpService")
 
-// Controller methods for CRUD operations on TopUp model
-const topUpController = {
-  async getAllTopUps(req, res) {
-    try {
-      const topUps = await TopUp.findAll()
-      res.status(200).json(topUps)
-    } catch (error) {
-      res.status(500).json({ error: error.message })
-    }
-  },
-
-  async getTopUpById(req, res) {
-    try {
-      const { id } = req.params
-      const topUp = await TopUp.findByPk(id)
-      if (!topUp) {
-        return res.status(404).json({ message: "TopUp not found" })
-      }
-      res.status(200).json(topUp)
-    } catch (error) {
-      res.status(500).json({ error: error.message })
-    }
-  },
-
-  async createTopUp(req, res) {
-    try {
-      const newTopUp = await TopUp.create(req.body)
-      res.status(201).json(newTopUp)
-    } catch (error) {
-      res.status(400).json({ error: error.message })
-    }
-  },
-
-  async updateTopUp(req, res) {
-    try {
-      const { id } = req.params
-      const [updatedRowsCount] = await TopUp.update(req.body, {
-        where: { id },
-      })
-      if (updatedRowsCount === 0) {
-        return res.status(404).json({ message: "TopUp not found" })
-      }
-      res.status(200).json({ message: "TopUp updated successfully" })
-    } catch (error) {
-      res.status(400).json({ error: error.message })
-    }
-  },
-
-  async deleteTopUp(req, res) {
-    try {
-      const { id } = req.params
-      const deletedRowCount = await TopUp.destroy({ where: { id } })
-      if (deletedRowCount === 0) {
-        return res.status(404).json({ message: "TopUp not found" })
-      }
-      res.status(200).json({ message: "TopUp deleted successfully" })
-    } catch (error) {
-      res.status(500).json({ error: error.message })
-    }
-  },
+const createTopUp = async (req, res) => {
+  try {
+    const topUp = await topUpService.createTopUp(req.body)
+    return res.status(201).json(topUp)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 }
 
-module.exports = topUpController
+const getAllTopUps = async (req, res) => {
+  try {
+    const topUps = await topUpService.getAllTopUps()
+    return res.status(200).json(topUps)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+const getTopUpById = async (req, res) => {
+  const id = req.params.id
+  try {
+    const topUp = await topUpService.getTopUpById(id)
+    if (!topUp) {
+      return res.status(404).json({ message: "Top-up not found" })
+    }
+    return res.status(200).json(topUp)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+const updateTopUp = async (req, res) => {
+  const id = req.params.id
+  const updatedData = req.body
+  try {
+    const updatedTopUp = await topUpService.updateTopUp(id, updatedData)
+    if (!updatedTopUp) {
+      return res.status(404).json({ message: "Top-up not found" })
+    }
+    return res.status(200).json(updatedTopUp)
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+const deleteTopUp = async (req, res) => {
+  const id = req.params.id
+  try {
+    const deletedTopUp = await topUpService.deleteTopUp(id)
+    if (!deletedTopUp) {
+      return res.status(404).json({ message: "Top-up not found" })
+    }
+    return res.status(200).json({ message: "Top-up deleted successfully" })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+module.exports = {
+  createTopUp,
+  getAllTopUps,
+  getTopUpById,
+  updateTopUp,
+  deleteTopUp,
+}
