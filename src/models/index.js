@@ -3,6 +3,7 @@ const User = require("./User")
 const Request = require("./Request")
 const Switch = require("./Switch")
 const TopUp = require("./TopUp")
+const Redemption = require("./Redemption")
 // Import other models here
 
 const models = {
@@ -10,7 +11,7 @@ const models = {
   Request,
   Switch,
   TopUp,
-  // Other models...
+  Redemption,
 }
 
 Object.keys(models).forEach((modelName) => {
