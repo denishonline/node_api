@@ -1,24 +1,24 @@
 const requestService = require("../services/requestService")
 
-const createRequest = async (req, res) => {
+const createRequest = async (req, res, next) => {
   try {
     const request = await requestService.createRequest(req.body)
     return res.status(201).json(request)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const getAllRequests = async (req, res) => {
+const getAllRequests = async (req, res, next) => {
   try {
     const requests = await requestService.getAllRequests()
     return res.status(200).json(requests)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const getRequestById = async (req, res) => {
+const getRequestById = async (req, res, next) => {
   const id = req.params.id
   try {
     const request = await requestService.getRequestById(id)
@@ -27,11 +27,11 @@ const getRequestById = async (req, res) => {
     }
     return res.status(200).json(request)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const updateRequest = async (req, res) => {
+const updateRequest = async (req, res, next) => {
   const id = req.params.id
   const updatedData = req.body
   try {
@@ -41,11 +41,11 @@ const updateRequest = async (req, res) => {
     }
     return res.status(200).json(updatedRequest)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const deleteRequest = async (req, res) => {
+const deleteRequest = async (req, res, next) => {
   const id = req.params.id
   try {
     const deletedRequest = await requestService.deleteRequest(id)
@@ -54,7 +54,7 @@ const deleteRequest = async (req, res) => {
     }
     return res.status(200).json({ message: "Top-up deleted successfully" })
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 

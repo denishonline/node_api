@@ -1,24 +1,24 @@
 const redemptionService = require("../services/redemptionService")
 
-const createRedemption = async (req, res) => {
+const createRedemption = async (req, res, next) => {
   try {
     const newRedemption = await redemptionService.createRedemption(req.body)
     return res.status(201).json(newRedemption)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const getAllRedemptions = async (req, res) => {
+const getAllRedemptions = async (req, res, next) => {
   try {
     const redemptions = await redemptionService.getAllRedemptions()
     return res.status(200).json(redemptions)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const getRedemptionById = async (req, res) => {
+const getRedemptionById = async (req, res, next) => {
   try {
     const { id } = req.params
     const redemption = await redemptionService.getRedemptionById(id)
@@ -27,11 +27,11 @@ const getRedemptionById = async (req, res) => {
     }
     return res.status(200).json(redemption)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const updateRedemption = async (req, res) => {
+const updateRedemption = async (req, res, next) => {
   try {
     const { id } = req.params
     const updatedRedemption = await redemptionService.updateRedemption(
@@ -40,17 +40,17 @@ const updateRedemption = async (req, res) => {
     )
     return res.status(200).json(updatedRedemption)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
-const deleteRedemption = async (req, res) => {
+const deleteRedemption = async (req, res, next) => {
   try {
     const { id } = req.params
     await redemptionService.deleteRedemption(id)
     return res.status(204).send()
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    next(error)
   }
 }
 
